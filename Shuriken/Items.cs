@@ -34,7 +34,7 @@ namespace Shuriken
         /// Equips an item onto the entity by either ID or name of item.
         /// </summary>
         /// <param name="source">ID or Name</param>
-        /// <param name="entity">Player or NPC, null to default to you.</param>
+        /// <param name="entity">Player or NPC, leave null to default to the player.</param>
         public static async void EquipItem(object source, Entity entity = null)
         {
             if (Map == null) await CacheItemsFromAPI();
@@ -52,7 +52,7 @@ namespace Shuriken
         /// Equips a list of items onto an entity, either by ID or name of item.
         /// </summary>
         /// <param name="source">List of ID's or Item names.</param>
-        /// <param name="entity">Player or NPC</param>
+        /// <param name="entity">Player or NPC, leave null to default to the player.</param>
         public static async void EquipItems(List<object> source, Entity entity = null)
         {
             if (Map == null) await CacheItemsFromAPI();
@@ -93,14 +93,16 @@ namespace Shuriken
         }
 
         /// <summary>
-        /// Returns a list of all items of specified equip slot.
+        /// Returns a list of all items by equip slot or none.
         /// </summary>
-        /// <param name="equipSlot">The equip slot of the items you would like to retrieve.</param>
+        /// <param name="equipSlot">The equip slot of the items you would like to retrieve.
+        /// Leave null to return a list of all items.</param>
         /// <returns>List of Item</returns>
-        public static async Task<List<Item>> GetItemsByEquipSlot(EquipItemSlot equipSlot)
+        public static async Task<List<Item>> GetItems(EquipItemSlot equipSlot = EquipItemSlot.None)
         {
             if (Map == null) await CacheItemsFromAPI();
-
+            if (equipSlot == EquipItemSlot.None) return Map;
+            
             var items = new List<Item>();
 
             try
