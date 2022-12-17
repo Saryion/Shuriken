@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuriken", "Shuriken\Shuriken.csproj", "{B126C14E-8954-4179-9AA4-9A35B2BFDBBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B126C14E-8954-4179-9AA4-9A35B2BFDBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B126C14E-8954-4179-9AA4-9A35B2BFDBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B126C14E-8954-4179-9AA4-9A35B2BFDBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B126C14E-8954-4179-9AA4-9A35B2BFDBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
