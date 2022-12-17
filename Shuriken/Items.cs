@@ -98,9 +98,17 @@ namespace Shuriken
             if (Map == null) await CacheItemsFromAPI();
 
             var items = new List<Item>();
-            foreach (Item item in Map)
+
+            try
             {
-                if (item.EquipSlot == equipSlot) items.Add(item);
+                foreach (Item item in Map)
+                {
+                    if (item.EquipSlot == equipSlot) items.Add(item);
+                }
+            }
+            catch
+            {
+                return null;
             }
 
             return items;
@@ -125,9 +133,17 @@ namespace Shuriken
             if (Map == null) await CacheItemsFromAPI();
 
             var items = new List<Item>();
-            foreach (Item item in Map)
+
+            try
             {
-                if (IsCC(item)) items.Add(item);
+                foreach (Item item in Map)
+                {
+                    if (IsCC(item)) items.Add(item);
+                }
+            }
+            catch
+            {
+                return null;
             }
 
             return items;
@@ -137,23 +153,19 @@ namespace Shuriken
         /// Applies a custom color to the item specified in hex codes,
         /// R G B being separate color strips on the item.
         /// </summary>
-        /// <param name="equipSlot">Which item slot to apply the color</param>
-        /// <param name="r">Hex Code</param>
-        /// <param name="g">Hex Code</param>
-        /// <param name="b">Hex Code</param>
-        /// <param name="entity">Player or NPC</param>
-        public static async void CustomColor(EquipItemSlot equipSlot, string r, string g, string b, Entity entity)
+        /// <param name="item">The Item which you would like to custom color.</param>
+        /// <param name="r">Hex code or leave null to use original color.</param>
+        /// <param name="g">Hex code or leave null to use original color.</param>
+        /// <param name="b">Hex code or leave null to use original color.</param>
+        public static Item CustomColor(Item item, string r = null, string g = null, string b = null)
         {
-            Item item = await GetItem(entity.baseAsset.equips[equipSlot].ID);
+            if (!IsCC(item)) return null;
 
-            if (!IsCC(item)) return;
+            item.ColorR = r ?? item.ColorR;
+            item.ColorG = g ?? item.ColorG;
+            item.ColorB = b ?? item.ColorB;
 
-            item.ColorR = r;
-            item.ColorG = g;
-            item.ColorB = b;
-
-            entity.baseAsset.equips[equipSlot] = item;
-            entity.UpdateAsset(entity.baseAsset);
+            return item;
         }
     }
 }
