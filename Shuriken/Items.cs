@@ -67,7 +67,7 @@ namespace Shuriken
         }
 
         /// <summary>
-        /// Gets and returns the Item by ID or name.
+        /// Returns the Item by ID or name.
         /// </summary>
         /// <param name="source">ID or Name</param>
         /// <returns>Item</returns>
@@ -89,6 +89,24 @@ namespace Shuriken
         }
 
         /// <summary>
+        /// Returns a list of all items of specified equip slot.
+        /// </summary>
+        /// <param name="equipSlot">The equip slot of the items you would like to retrieve.</param>
+        /// <returns>List of Item</returns>
+        public static async Task<List<Item>> GetItemsByEquipSlot(EquipItemSlot equipSlot)
+        {
+            if (Map == null) await CacheItemsFromAPI();
+
+            var items = new List<Item>();
+            foreach (Item item in Map)
+            {
+                if (item.EquipSlot == equipSlot) items.Add(item);
+            }
+
+            return items;
+        }
+        
+        /// <summary>
         /// Returns if the item is custom color compatible.
         /// </summary>
         /// <param name="item">Item</param>
@@ -96,6 +114,23 @@ namespace Shuriken
         public static bool IsCC(Item item)
         {
             return item.ColorR != "" || item.ColorR != null;
+        }
+
+        /// <summary>
+        /// Returns a list of all items which are capable of custom color.
+        /// </summary>
+        /// <returns>List of Item</returns>
+        public static async Task<List<Item>> GetCCItems()
+        {
+            if (Map == null) await CacheItemsFromAPI();
+
+            var items = new List<Item>();
+            foreach (Item item in Map)
+            {
+                if (IsCC(item)) items.Add(item);
+            }
+
+            return items;
         }
 
         /// <summary>
