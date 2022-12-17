@@ -34,13 +34,15 @@ namespace Shuriken
         /// Equips an item onto the entity by either ID or name of item.
         /// </summary>
         /// <param name="source">ID or Name</param>
-        /// <param name="entity">Player or NPC</param>
-        public static async void EquipItem(object source, Entity entity)
+        /// <param name="entity">Player or NPC, null to default to you.</param>
+        public static async void EquipItem(object source, Entity entity = null)
         {
             if (Map == null) await CacheItemsFromAPI();
 
             Item item = await Task.Run(() => GetItem(source));
             if (item == null) return;
+
+            if (entity == null) entity = Entities.Instance.me;
             
             entity.baseAsset.equips[item.EquipSlot] = item;
             entity.UpdateAsset(entity.baseAsset);
@@ -51,9 +53,11 @@ namespace Shuriken
         /// </summary>
         /// <param name="source">List of ID's or Item names.</param>
         /// <param name="entity">Player or NPC</param>
-        public static async void EquipItems(List<object> source, Entity entity)
+        public static async void EquipItems(List<object> source, Entity entity = null)
         {
             if (Map == null) await CacheItemsFromAPI();
+            
+            if (entity == null) entity = Entities.Instance.me;
             
             foreach (var i in source)
             {
