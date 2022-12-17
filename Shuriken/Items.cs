@@ -113,14 +113,14 @@ namespace Shuriken
         /// <returns>Boolean</returns>
         public static bool IsCC(Item item)
         {
-            return item.ColorR != "" || item.ColorR != null;
+            return item.ColorR != null;
         }
 
         /// <summary>
         /// Returns a list of all items which are capable of custom color.
         /// </summary>
         /// <returns>List of Item</returns>
-        public static async Task<List<Item>> GetCCItems()
+        public static async Task<List<Item>> GetCustomColorItems()
         {
             if (Map == null) await CacheItemsFromAPI();
 
