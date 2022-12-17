@@ -63,6 +63,7 @@
     <ItemGroup>
         <Compile Include="API\APIManager.cs" />
         <Compile Include="API\APITypes.cs" />
+        <Compile Include="Chars.cs" />
         <Compile Include="Items.cs" />
         <Compile Include="Shuriken.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

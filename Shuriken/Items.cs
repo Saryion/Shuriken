@@ -4,18 +4,21 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-using Shuriken.API;
-
 using StatCurves;
+
+using Shuriken.API;
 
 namespace Shuriken
 {
+    /// <summary>
+    /// A bunch of useful methods for working with items.
+    /// </summary>
     public class Items
     {
         public static List<Item> Map;
 
         /// <summary>
-        /// Caches a collection of Items from the API and deserializes
+        /// Caches a collection of items from the API and deserializes
         /// them into a list of Item. Saved in Items.Map.
         /// </summary>
         /// <returns>Boolean</returns>
@@ -31,7 +34,7 @@ namespace Shuriken
         }
         
         /// <summary>
-        /// Equips an item onto the entity by either ID or name of item.
+        /// Equips an item onto the entity, either by ID or name of item.
         /// </summary>
         /// <param name="source">ID or Name</param>
         /// <param name="entity">Player or NPC, leave null to default to the player.</param>
@@ -112,7 +115,7 @@ namespace Shuriken
                     if (item.EquipSlot == equipSlot) items.Add(item);
                 }
             }
-            catch
+            catch (NullReferenceException e)
             {
                 return null;
             }
@@ -147,7 +150,7 @@ namespace Shuriken
                     if (IsCC(item)) items.Add(item);
                 }
             }
-            catch
+            catch (NullReferenceException e)
             {
                 return null;
             }
@@ -163,6 +166,7 @@ namespace Shuriken
         /// <param name="r">Hex code or leave null to use original color.</param>
         /// <param name="g">Hex code or leave null to use original color.</param>
         /// <param name="b">Hex code or leave null to use original color.</param>
+        /// <returns>CC Item</returns>
         public static Item CustomColor(Item item, string r = null, string g = null, string b = null)
         {
             if (!IsCC(item)) return null;
