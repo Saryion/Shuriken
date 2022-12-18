@@ -8,8 +8,8 @@ namespace Shuriken
     /// </summary>
     public class Chars
     {
-        private static List<Player> Players => Entities.Instance.PlayerList;
-        private static List<NPC> NPCs => Entities.Instance.NpcList;
+        public static List<Player> Players => Entities.Instance.PlayerList;
+        public static List<NPC> NPCs => Entities.Instance.NpcList;
 
         /// <summary>
         /// Gets a Player by ID or Name if exists.
@@ -70,6 +70,71 @@ namespace Shuriken
         {
             // Needs to trim because some NPCs have trailing whitespace.
             return NPCs.Find(p => p.name.Trim() == name) != null;
+        }
+
+        /// <summary>
+        /// Hides the players wrapper and optionally their pets from your screen.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <param name="hidePets">Boolean</param>
+        public static void HidePlayer(Player player, bool hidePets = true)
+        {
+            player.wrapper.SetActive(false);
+            player.namePlate.gameObject.SetActive(false);
+            
+            if (hidePets && player.petGO != null) player.petGO.SetActive(false);
+        }
+        
+        /// <summary>
+        /// Shows the players wrapper if they have previously been hidden..
+        /// </summary>
+        /// <param name="player">Player</param>
+        public static void ShowPlayer(Player player)
+        {
+            player.wrapper.SetActive(true);
+            player.namePlate.gameObject.SetActive(true);
+            
+            if (player.petGO != null && !player.petGO.activeSelf) player.petGO.SetActive(true);
+        }
+
+        /// <summary>
+        /// Checks if the player is Staff.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>Boolean</returns>
+        public static bool IsStaff(Player player)
+        {
+            return player.AccessLevel >= AccessLevels.Tester;
+        }
+        
+        /// <summary>
+        /// Checks if the player is a Tester member.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>Boolean</returns>
+        public static bool IsTester(Player player)
+        {
+            return player.AccessLevel == AccessLevels.Tester || player.AccessLevel == AccessLevels.WhiteHat;
+        }
+        
+        /// <summary>
+        /// Checks if the player is a Moderator member.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>Boolean</returns>
+        public static bool IsMod(Player player)
+        {
+            return player.AccessLevel == AccessLevels.Moderator;
+        }
+        
+        /// <summary>
+        /// Checks if the player is a Game Developer member.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>Boolean</returns>
+        public static bool IsDev(Player player)
+        {
+            return player.AccessLevel >= AccessLevels.Admin;
         }
     }
 }
